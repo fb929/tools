@@ -36,6 +36,7 @@ jobs:
         include:
           - arch: noarch
             rpm_arch: noarch
+            deb_arch: all
     steps:
       - uses: actions/checkout@v3
 
@@ -56,7 +57,7 @@ jobs:
           fpm_opts:
             --name ${{ github.event.repository.name }}
             --version ${{ steps.release-version.outputs.RELEASE_VERSION }}
-            --architecture ${{ matrix.arch }}
+            --architecture ${{ matrix.deb_arch }}
             --exclude '*/.gitignore'
             --exclude '*/.git'
             --input-type dir
@@ -89,8 +90,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.upload_url }}
-          asset_path: ./${{ github.event.repository.name }}_${{ steps.release-version.outputs.RELEASE_VERSION }}_${{ matrix.arch }}.deb
-          asset_name: ${{ github.event.repository.name }}_${{ steps.release-version.outputs.RELEASE_VERSION }}_${{ matrix.arch }}.deb
+          asset_path: ./${{ github.event.repository.name }}_${{ steps.release-version.outputs.RELEASE_VERSION }}_${{ matrix.deb_arch }}.deb
+          asset_name: ${{ github.event.repository.name }}_${{ steps.release-version.outputs.RELEASE_VERSION }}_${{ matrix.deb_arch }}.deb
           asset_content_type: application/octet-stream
 
       - name: upload-release-asset rpm
