@@ -7,10 +7,10 @@ on:
 name: release
 
 jobs:
+  permissions: write-all
   create_release:
     name: create release
     runs-on: ubuntu-latest
-    permissions: write-all
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
